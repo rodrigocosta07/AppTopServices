@@ -4,15 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrarActivity">
+    tools:context=".RegistrarActivity"
+    android:orientation="vertical">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Qual perfil deseja se cadastrar?"/>
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <RadioButton
+        android:orientation="horizontal"
+        >
 
+        <RadioButton android:id="@+id/RadioCondominio"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Condominio"
+            />
+
+        <RadioButton android:id="@+id/RadioProfissional"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profissional"
+            />
     </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/FormCondominio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Preencha os dados abaixo para o cadastro"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/FormProfissional"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Preencha os dados abaixo para o cadastro"/>
+    </LinearLayout>
 </LinearLayout>
