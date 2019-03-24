@@ -98,6 +98,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"/>
+
+        <Button
+            android:id="@+id/BtnCadastrarCondo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cadastrar"/>
     </LinearLayout>
 
     <LinearLayout
@@ -158,5 +164,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"/>
+
+        <Button
+            android:id="@+id/BtnCadastrarProf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cadastrar"/>
     </LinearLayout>
+
+
+
+
 </LinearLayout>
