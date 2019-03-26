@@ -13,12 +13,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Login"/>
 
         <EditText
+            android:hint="Login"
             android:id="@+id/EdtLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -31,12 +28,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Senha"/>
 
         <EditText
+            android:hint="Senha"
             android:id="@+id/EdtSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +46,10 @@
             android:id="@+id/BtnLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"/>
+            android:text="Login"
+            android:textColor="#ffffff"
+            android:background="@drawable/circular_border"
+            />
 
         <Button
             android:id="@+id/BtnCadastrar"
