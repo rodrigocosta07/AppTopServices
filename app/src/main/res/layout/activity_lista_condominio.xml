@@ -6,4 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ListaCondominioActivity">
 
+
+    <include layout="@layout/content_list"/>
 </android.support.constraint.ConstraintLayout>

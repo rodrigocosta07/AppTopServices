@@ -15,7 +15,18 @@ public class Condominio {
     private String email;
     private String senha;
 
-    public Condominio(){
+
+    public Condominio(String idCondo, String nomeCondominio, String nomeResponsavel, String telefone, String endereco, String email, String senha) {
+        this.idCondo = idCondo;
+        this.nomeCondominio = nomeCondominio;
+        this.nomeResponsavel = nomeResponsavel;
+        this.telefone = telefone;
+        this.endereco = endereco;
+        this.email = email;
+        this.senha = senha;
+    }
+
+    public Condominio() {
 
     }
 
