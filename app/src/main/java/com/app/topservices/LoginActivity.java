@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
         final Button Registrar = (Button) this.findViewById(R.id.BtnCadastrar);
 
+
         Registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,9 +64,20 @@ public class LoginActivity extends AppCompatActivity {
         Entrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userLogin = Login.getText().toString();
-                userSenha = Senha.getText().toString();
-                validarLogin();
+
+                if(Login.getText().toString().isEmpty() && Senha.getText().toString().isEmpty() ){
+                    Toast.makeText(LoginActivity.this, "Digite o seu email e senha" , Toast.LENGTH_LONG).show();
+                }else if (Login.getText().toString().isEmpty()){
+                    Toast.makeText(LoginActivity.this, "Digite o seu email" , Toast.LENGTH_LONG).show();
+                }else if(Senha.getText().toString().isEmpty()){
+                    Toast.makeText(LoginActivity.this, "Digite sua senha" , Toast.LENGTH_LONG).show();
+                }else{
+                    userLogin = Login.getText().toString();
+                    userSenha = Senha.getText().toString();
+                    validarLogin();
+                }
+
+
             }
 
 

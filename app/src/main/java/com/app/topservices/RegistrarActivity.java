@@ -105,26 +105,70 @@ public class RegistrarActivity extends AppCompatActivity {
            @Override
            public void onClick(View view) {
                 condominio = new Condominio();
-                condominio.setNomeCondominio(NomeCondo.getText().toString());
-               condominio.setNomeResponsavel(NomeResp.getText().toString());
-               condominio.setEndereco(EnderecoCondo.getText().toString());
-               condominio.setTelefone(telefoneCondo.getText().toString());
-               condominio.setEmail(EmailCondo.getText().toString());
-               condominio.setSenha(SenhaCondo.getText().toString());
-               CadastrarCondominio();
+
+               if(NomeCondo.getText().toString().isEmpty()){
+                   Toast.makeText(RegistrarActivity.this, "Preencha os dados" , Toast.LENGTH_LONG).show();
+                   NomeCondo.requestFocus();
+               }else if (EnderecoCondo.getText().toString().isEmpty()) {
+                   Toast.makeText(RegistrarActivity.this, "Digite sua cidade", Toast.LENGTH_LONG).show();
+                   EnderecoCondo.requestFocus();
+               }else if (telefoneProf.getText().toString().isEmpty()) {
+                   Toast.makeText(RegistrarActivity.this, "Digite o seu telefone", Toast.LENGTH_LONG).show();
+                   telefoneCondo.requestFocus();
+               }else if (EmailCondo.getText().toString().isEmpty()) {
+                   Toast.makeText(RegistrarActivity.this, "Digite o seu email", Toast.LENGTH_LONG).show();
+                   EmailCondo.requestFocus();
+               }else if (SenhaCondo.getText().toString().isEmpty()) {
+                   Toast.makeText(RegistrarActivity.this, "Digite sua senha", Toast.LENGTH_LONG).show();
+                   SenhaCondo.requestFocus();
+               }else if (NomeResp.getText().toString().isEmpty()) {
+                   Toast.makeText(RegistrarActivity.this, "Digite sua senha", Toast.LENGTH_LONG).show();
+                   NomeResp.requestFocus();
+               }else{
+                   condominio.setNomeCondominio(NomeCondo.getText().toString());
+                   condominio.setNomeResponsavel(NomeResp.getText().toString());
+                   condominio.setEndereco(EnderecoCondo.getText().toString());
+                   condominio.setTelefone(telefoneCondo.getText().toString());
+                   condominio.setEmail(EmailCondo.getText().toString());
+                   condominio.setSenha(SenhaCondo.getText().toString());
+                   CadastrarCondominio();
+               }
+
+
+
            }
        });
 
        CadastrarProf.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-                profissional = new Profissional();
-               profissional.setNome(NomeProf.getText().toString());
-               profissional.setCidade(Cidade.getText().toString());
-               profissional.setTelefone(telefoneProf.getText().toString());
-               profissional.setEmail(EmailProf.getText().toString());
-               profissional.setSenha(SenhaProf.getText().toString());
-               CadastrarProfissional();
+               profissional = new Profissional();
+
+               if(NomeProf.getText().toString().isEmpty()){
+                   Toast.makeText(RegistrarActivity.this, "Preencha os dados" , Toast.LENGTH_LONG).show();
+                   NomeProf.requestFocus();
+               }else if (Cidade.getText().toString().isEmpty()) {
+                   Toast.makeText(RegistrarActivity.this, "Digite sua cidade", Toast.LENGTH_LONG).show();
+                   Cidade.requestFocus();
+               }else if (telefoneProf.getText().toString().isEmpty()) {
+                   Toast.makeText(RegistrarActivity.this, "Digite o seu telefone", Toast.LENGTH_LONG).show();
+                   telefoneProf.requestFocus();
+               }else if (EmailProf.getText().toString().isEmpty()) {
+                   Toast.makeText(RegistrarActivity.this, "Digite o seu email", Toast.LENGTH_LONG).show();
+                    EmailProf.requestFocus();
+               }else if (SenhaProf.getText().toString().isEmpty()) {
+                   Toast.makeText(RegistrarActivity.this, "Digite sua senha", Toast.LENGTH_LONG).show();
+                    SenhaProf.requestFocus();
+               }else{
+                   profissional.setNome(NomeProf.getText().toString());
+                   profissional.setCidade(Cidade.getText().toString());
+                   profissional.setTelefone(telefoneProf.getText().toString());
+                   profissional.setEmail(EmailProf.getText().toString());
+                   profissional.setSenha(SenhaProf.getText().toString());
+                   CadastrarProfissional();
+               }
+
+
            }
        });
     }
@@ -183,7 +227,24 @@ public class RegistrarActivity extends AppCompatActivity {
                     autenticacao.signOut();
                     finish();
                 }else{
-                    Toast.makeText(RegistrarActivity.this, "Erro ao realizar o cadastro" , Toast.LENGTH_LONG).show();
+
+
+                    String erroExecucao = "";
+
+                    try{
+                        throw task.getException();
+                    }catch (FirebaseAuthWeakPasswordException e){
+                        erroExecucao = "Digite uma senha mais forte, com letras e numeros";
+                    }catch (FirebaseAuthInvalidCredentialsException e){
+                        erroExecucao = "Email invalido, digite um novo email";
+                    }catch (FirebaseAuthUserCollisionException e){
+                        erroExecucao = "Email já está em uso, digite um novo email";
+                    }catch (Exception e){
+                        erroExecucao = "Erro ao fazer o cadastro";
+                        e.printStackTrace();
+                    }
+
+                    Toast.makeText(RegistrarActivity.this, "Erro: " + erroExecucao , Toast.LENGTH_LONG).show();
                 }
             }
         });
