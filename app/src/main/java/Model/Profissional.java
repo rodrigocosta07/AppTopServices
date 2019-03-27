@@ -14,9 +14,21 @@ public class Profissional {
     private String telefone;
     private String senha;
 
+
+    public Profissional(String idProfissional, String nome, String email, String cidade, String telefone, String senha) {
+        this.idProfissional = idProfissional;
+        this.nome = nome;
+        this.email = email;
+        this.cidade = cidade;
+        this.telefone = telefone;
+        this.senha = senha;
+    }
+
     public Profissional(){
 
     }
+
+
 
     public void salvar(){
         DatabaseReference referenciaFirebase = ConfiguracaoFirebase.getFirebase();
