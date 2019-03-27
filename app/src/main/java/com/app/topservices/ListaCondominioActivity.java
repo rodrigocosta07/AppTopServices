@@ -45,7 +45,12 @@ public class ListaCondominioActivity extends AppCompatActivity {
                 for(DataSnapshot dados : dataSnapshot.getChildren() ){
                     Condominio condominio = new Condominio();
                     String nomeCondo = (String) dados.child("nomeCondominio").getValue();
+                    String nomeResponsavel = (String) dados.child("nomeResponsavel").getValue();
+                    String Email = (String ) dados.child("email").getValue();
+
                     condominio.setNomeCondominio(nomeCondo);
+                    condominio.setNomeResponsavel(nomeResponsavel);
+                    condominio.setEmail(Email);
                     condominios.add(condominio);
                 }
                 adapter.notifyDataSetChanged();
