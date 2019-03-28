@@ -82,14 +82,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
         });
-
-
-
     }
+
     private void verificarUsuarioLogado(){
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         if( autenticacao.getCurrentUser() != null){
-            abrirTelaPrincipal();
+            String userId = autenticacao.getCurrentUser().getUid();
+            consultaUser(userId);
         }
     }
 
@@ -104,7 +103,6 @@ public class LoginActivity extends AppCompatActivity {
                     if( task.isSuccessful()){
                         String userId = task.getResult().getUser().getUid();
                         consultaUser(userId);
-                        abrirTelaPrincipal();
                         Toast.makeText(LoginActivity.this, "Login efetuado com sucesso", Toast.LENGTH_LONG).show();
                     }else{
                         Toast.makeText(LoginActivity.this, "Erro ao efetuar o login" , Toast.LENGTH_LONG).show();
@@ -114,26 +112,33 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void consultaUser(String id){
+        final String userId = id;
         referenciaFirebase = ConfiguracaoFirebase.getFirebase().child("Condominio").child(id);
-        if(referenciaFirebase != null){
-            Toast.makeText(LoginActivity.this, "profissional" , Toast.LENGTH_LONG).show();
-        }
         referenciaFirebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.i("FIRE", dataSnapshot.getChildren().toString());
+               if(dataSnapshot.exists()){
+                   abrirTelaPrincipalProfissional();
+               }else{
+                   abrirTelaPrincipalCondominio();
+               }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.i("FIRE" , "Erro");
 
             }
         });
     }
 
-    private void abrirTelaPrincipal(){
+    private void abrirTelaPrincipalCondominio(){
         Intent intent = new Intent(LoginActivity.this, ListaCondominioActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void abrirTelaPrincipalProfissional(){
+        Intent intent = new Intent(LoginActivity.this, ListaProfissionalActivity.class);
         startActivity(intent);
         finish();
     }
