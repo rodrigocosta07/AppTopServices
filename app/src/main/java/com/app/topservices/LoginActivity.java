@@ -1,30 +1,31 @@
 package com.app.topservices;
 
-import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import Config.ConfiguracaoFirebase;
-import Model.Profissional;
+
+import static android.view.View.GONE;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,12 +37,15 @@ public class LoginActivity extends AppCompatActivity {
     private String userSenha;
     private DatabaseReference referenciaFirebase;
     private FirebaseAuth autenticacao;
+    ProgressBar mProgressBar;
+    Integer count =1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        verificarNet();
         verificarUsuarioLogado();
 
         Login = (EditText) findViewById(R.id.EdtLogin);
@@ -50,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         final Button Registrar = (Button) this.findViewById(R.id.BtnCadastrar);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 
         Registrar.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +79,11 @@ public class LoginActivity extends AppCompatActivity {
                 }else{
                     userLogin = Login.getText().toString();
                     userSenha = Senha.getText().toString();
-                    validarLogin();
+                    //validarLogin();
+                    count = 1;
+                    mProgressBar.setVisibility(View.VISIBLE);
+                    mProgressBar.setProgress(0);
+                    new MinhaTask(view.getContext()).execute(10);
                 }
 
 
@@ -109,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
             });
+
     }
 
     private void consultaUser(String id){
@@ -141,5 +151,58 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, ListaProfissionalActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void verificarNet(){
+        ConnectivityManager conexao = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netinfo = conexao.getActiveNetworkInfo();
+
+        if(netinfo != null && netinfo.isConnectedOrConnecting()){
+            Toast.makeText(LoginActivity.this, "Você está conectado a internet", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(LoginActivity.this, "Você não está conectado a internet", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void exibirProgress(boolean exibir) {
+        mProgressBar.setVisibility(exibir ? View.VISIBLE : GONE);
+    }
+
+    private class MinhaTask extends AsyncTask<Integer, Integer, String> {
+        private Context context;
+        public MinhaTask(Context context) {
+
+            this.context = context;
+
+        }
+
+        @Override
+        protected String doInBackground(Integer... params) {
+            for(; count <= params[0]; count++ ){
+                try{
+                    Thread.sleep(800);
+                    publishProgress(count);
+                }catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
+            validarLogin();
+            return "";
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Entrar.setEnabled(false);
+        }
+
+        @Override
+        protected void onPostExecute(String retorno) {
+            mProgressBar.setVisibility(View.GONE);
+            Entrar.setEnabled(true);
+        }
+        @Override
+        protected  void onProgressUpdate(Integer... values){
+            mProgressBar.setProgress(values[0]);
+        }
     }
 }
