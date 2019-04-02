@@ -174,13 +174,12 @@ public class LoginActivity extends AppCompatActivity {
     private class MinhaTask extends AsyncTask<Integer, Integer, String> {
         private Context context;
         public MinhaTask(Context context) {
-
             this.context = context;
-
         }
 
         @Override
         protected String doInBackground(Integer... params) {
+            validarLogin();
             for(; count <= params[0]; count++ ){
                 try{
                     Thread.sleep(800);
@@ -189,7 +188,6 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            validarLogin();
             return "";
         }
 

@@ -112,7 +112,7 @@ public class RegistrarActivity extends AppCompatActivity {
                }else if (EnderecoCondo.getText().toString().isEmpty()) {
                    Toast.makeText(RegistrarActivity.this, "Digite sua cidade", Toast.LENGTH_LONG).show();
                    EnderecoCondo.requestFocus();
-               }else if (telefoneProf.getText().toString().isEmpty()) {
+               }else if (telefoneCondo.getText().toString().isEmpty()) {
                    Toast.makeText(RegistrarActivity.this, "Digite o seu telefone", Toast.LENGTH_LONG).show();
                    telefoneCondo.requestFocus();
                }else if (EmailCondo.getText().toString().isEmpty()) {
