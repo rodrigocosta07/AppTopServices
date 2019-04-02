@@ -72,10 +72,13 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(Login.getText().toString().isEmpty() && Senha.getText().toString().isEmpty() ){
                     Toast.makeText(LoginActivity.this, "Digite o seu email e senha" , Toast.LENGTH_LONG).show();
+                    Login.requestFocus();
                 }else if (Login.getText().toString().isEmpty()){
                     Toast.makeText(LoginActivity.this, "Digite o seu email" , Toast.LENGTH_LONG).show();
+                    Login.requestFocus();
                 }else if(Senha.getText().toString().isEmpty()){
                     Toast.makeText(LoginActivity.this, "Digite sua senha" , Toast.LENGTH_LONG).show();
+                    Senha.requestFocus();
                 }else{
                     userLogin = Login.getText().toString();
                     userSenha = Senha.getText().toString();
