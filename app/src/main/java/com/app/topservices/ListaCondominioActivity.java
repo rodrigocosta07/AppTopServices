@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Adapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +34,8 @@ public class ListaCondominioActivity extends AppCompatActivity implements Naviga
     private DatabaseReference referenciaFirebase;
     private static CustomAdapter adapter;
     private FirebaseAuth autenticacao;
+    TextView nome ;
+    TextView email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,10 @@ public class ListaCondominioActivity extends AppCompatActivity implements Naviga
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-/*
+        nome = findViewById(R.id.userName);
+        email = findViewById(R.id.textViewEmail);
+        user();
+        /*
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -82,9 +88,25 @@ public class ListaCondominioActivity extends AppCompatActivity implements Naviga
         });
 
     }
+
+    private void user(){
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        referenciaFirebase = ConfiguracaoFirebase.getFirebase();
+        String userEmail = null;
+        String userId = null;
+        if( autenticacao.getCurrentUser() != null){
+            userId = autenticacao.getCurrentUser().getUid();
+            userEmail = (String) autenticacao.getCurrentUser().getEmail();
+           // email.setText(userEmail);
+        }
+
+        
+
+
+    }
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.TelaListaCondominio);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
