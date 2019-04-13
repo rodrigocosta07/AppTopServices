@@ -1,6 +1,7 @@
 package com.app.topservices;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,7 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +37,8 @@ public class ListaProfissionalActivity extends AppCompatActivity implements Navi
     ListView listView;
     private DatabaseReference referenciaFirebase;
     private static CustomAdapterProfissional adapter;
+    TextView nomeUser ;
+    TextView email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,14 @@ public class ListaProfissionalActivity extends AppCompatActivity implements Navi
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        nomeUser = headerView.findViewById(R.id.userName);
+        email = headerView.findViewById(R.id.textViewEmail);
+        ImageView imagemHeader = headerView.findViewById(R.id.imageView);
+        Drawable drawable= getResources().getDrawable(R.mipmap.ic_condominio);
+        imagemHeader.setImageDrawable(drawable);
+
+        user();
 
         listView = (ListView) findViewById(R.id.list);
 
@@ -83,6 +97,41 @@ public class ListaProfissionalActivity extends AppCompatActivity implements Navi
 
         }
     });
+    }
+
+    private void user() {
+        final String userEmail = null;
+        String userId = null;
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        referenciaFirebase = ConfiguracaoFirebase.getFirebase();
+
+        if (autenticacao.getCurrentUser() != null) {
+            userId = autenticacao.getCurrentUser().getUid();
+            referenciaFirebase = ConfiguracaoFirebase.getFirebase().child("Condominio").child(userId);
+            referenciaFirebase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Condominio condominio = dataSnapshot.getValue(Condominio.class);
+                        String nome = (String) dataSnapshot.child("nomeCondominio").getValue();
+                        String Email = (String) dataSnapshot.child("email").getValue();
+                        condominio.setNomeCondominio(nome);
+                        condominio.setEmail(Email);
+
+                        email.setText(condominio.getEmail());
+                        nomeUser.setText(condominio.getNomeCondominio());
+
+                    } else {
+                        Toast.makeText(ListaProfissionalActivity.this, "Usuario não encontrado", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
     @Override
     public void onBackPressed() {

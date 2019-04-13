@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void consultaUser(String id){
-        final String userId = id;
+
         referenciaFirebase = ConfiguracaoFirebase.getFirebase().child("Condominio").child(id);
         referenciaFirebase.addValueEventListener(new ValueEventListener() {
             @Override

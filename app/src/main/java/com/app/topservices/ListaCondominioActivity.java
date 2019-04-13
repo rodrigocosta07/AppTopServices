@@ -1,6 +1,7 @@
 package com.app.topservices;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,9 +12,13 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +30,7 @@ import java.util.ArrayList;
 
 import Config.ConfiguracaoFirebase;
 import Model.Condominio;
+import Model.Profissional;
 
 public class ListaCondominioActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -34,7 +40,7 @@ public class ListaCondominioActivity extends AppCompatActivity implements Naviga
     private DatabaseReference referenciaFirebase;
     private static CustomAdapter adapter;
     private FirebaseAuth autenticacao;
-    TextView nome ;
+    TextView nomeUser ;
     TextView email;
 
     @Override
@@ -44,9 +50,9 @@ public class ListaCondominioActivity extends AppCompatActivity implements Naviga
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        nome = findViewById(R.id.userName);
-        email = findViewById(R.id.textViewEmail);
-        user();
+
+
+
         /*
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -56,7 +62,14 @@ public class ListaCondominioActivity extends AppCompatActivity implements Naviga
 */
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        nomeUser = headerView.findViewById(R.id.userName);
+        email = headerView.findViewById(R.id.textViewEmail);
+        ImageView imagemHeader = headerView.findViewById(R.id.imageView);
+        Drawable drawable= getResources().getDrawable(R.mipmap.ic_profissional);
+        imagemHeader.setImageDrawable(drawable);
 
+        user();
         listView = (ListView) findViewById(R.id.list);
         condominios = new ArrayList<>();
         adapter = new CustomAdapter(condominios,getApplicationContext());
@@ -72,10 +85,11 @@ public class ListaCondominioActivity extends AppCompatActivity implements Naviga
                     String nomeCondo = (String) dados.child("nomeCondominio").getValue();
                     String nomeResponsavel = (String) dados.child("nomeResponsavel").getValue();
                     String Email = (String ) dados.child("email").getValue();
-
+                    String idCondo = (String) dados.getKey();
                     condominio.setNomeCondominio(nomeCondo);
                     condominio.setNomeResponsavel(nomeResponsavel);
                     condominio.setEmail(Email);
+                    condominio.setIdCondo(idCondo);
                     condominios.add(condominio);
                 }
                 adapter.notifyDataSetChanged();
@@ -87,21 +101,52 @@ public class ListaCondominioActivity extends AppCompatActivity implements Naviga
             }
         });
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Condominio condominio = condominios.get(i);
+
+                Intent intent = new Intent(ListaCondominioActivity.this, InfoCondominioActivity.class);
+                intent.putExtra("IdCondo" , condominio.getIdCondo());
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void user(){
+        final String userEmail = null;
+        String userId = null;
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         referenciaFirebase = ConfiguracaoFirebase.getFirebase();
-        String userEmail = null;
-        String userId = null;
+
         if( autenticacao.getCurrentUser() != null){
             userId = autenticacao.getCurrentUser().getUid();
-            userEmail = autenticacao.getCurrentUser().getEmail();
-           //email.setText(userEmail.toString());
+            referenciaFirebase = ConfiguracaoFirebase.getFirebase().child("Profissional").child(userId);
+            referenciaFirebase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()){
+                        Profissional user = dataSnapshot.getValue(Profissional.class);
+                        String nome = (String) dataSnapshot.child("nome").getValue();
+                        String Email = (String ) dataSnapshot.child("email").getValue();
+                        user.setNome(nome);
+                        user.setEmail(Email);
+
+                        email.setText(user.getEmail());
+                        nomeUser.setText(user.getNome());
+
+                    }else{
+                        Toast.makeText(ListaCondominioActivity.this, "Usuario não encontrado" , Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
-
-        
-
 
     }
     @Override

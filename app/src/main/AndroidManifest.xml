@@ -11,14 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+        <activity android:name=".InfoCondominioActivity"></activity>
         <activity
             android:name=".TesteActivity"
             android:label="@string/title_activity_teste"
-            android:theme="@style/Theme.MaterialComponents"></activity>
+            android:theme="@style/Theme.MaterialComponents" />
         <activity android:name=".ListaProfissionalActivity" />
         <activity android:name=".ListaCondominioActivity" />
         <activity android:name=".RegistrarActivity" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
