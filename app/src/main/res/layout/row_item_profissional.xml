@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
 
+
+    <ImageView
+        android:id="@+id/item_profissional"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/ic_profissional" />
 
     <TextView
         android:id="@+id/name"
@@ -23,14 +34,7 @@
         android:text="Android 6.0"
         android:textColor="@android:color/black" />
 
-    <ImageView
-        android:id="@+id/item_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:src="@android:drawable/ic_dialog_info" />
+
 
 
     <LinearLayout
@@ -51,4 +55,4 @@
 
 
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

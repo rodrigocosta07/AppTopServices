@@ -96,8 +96,8 @@ public class ListaCondominioActivity extends AppCompatActivity implements Naviga
         String userId = null;
         if( autenticacao.getCurrentUser() != null){
             userId = autenticacao.getCurrentUser().getUid();
-            userEmail = (String) autenticacao.getCurrentUser().getEmail();
-           // email.setText(userEmail);
+            userEmail = autenticacao.getCurrentUser().getEmail();
+           //email.setText(userEmail.toString());
         }
 
         

@@ -54,11 +54,11 @@ public class CustomAdapterProfissional extends ArrayAdapter<Profissional> implem
         if(convertView == null){
             viewHolder = new CustomAdapterProfissional.ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.row_item, parent, false);
+            convertView = inflater.inflate(R.layout.row_item_profissional, parent, false);
             viewHolder.txtName = (TextView) convertView.findViewById(R.id.name);
             viewHolder.txtType = (TextView) convertView.findViewById(R.id.type);
             viewHolder.txtVersion = (TextView) convertView.findViewById(R.id.version_number);
-            viewHolder.info = (ImageView) convertView.findViewById(R.id.item_info);
+            viewHolder.info = convertView.findViewById(R.id.item_profissional);
 
             result = convertView;
 

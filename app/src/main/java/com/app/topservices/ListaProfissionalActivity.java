@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -64,6 +66,7 @@ public class ListaProfissionalActivity extends AppCompatActivity implements Navi
                     profissional.setTelefone(Telefone);
                     profissional.setEmail(Email);
                     profissionais.add(profissional);
+
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -73,6 +76,13 @@ public class ListaProfissionalActivity extends AppCompatActivity implements Navi
 
             }
         });
+
+    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+        }
+    });
     }
     @Override
     public void onBackPressed() {
