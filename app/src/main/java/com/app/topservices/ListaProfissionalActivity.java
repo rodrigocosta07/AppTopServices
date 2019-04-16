@@ -75,10 +75,11 @@ public class ListaProfissionalActivity extends AppCompatActivity implements Navi
                     String nomeProf = (String) dados.child("nome").getValue();
                     String Telefone = (String) dados.child("telefone").getValue();
                     String Email = (String ) dados.child("email").getValue();
-
+                    String idProf = (String) dados.getKey();
                     profissional.setNome(nomeProf);
                     profissional.setTelefone(Telefone);
                     profissional.setEmail(Email);
+                    profissional.setIdProfissional(idProf);
                     profissionais.add(profissional);
 
                 }
@@ -94,7 +95,11 @@ public class ListaProfissionalActivity extends AppCompatActivity implements Navi
     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Profissional profissional = profissionais.get(i);
 
+            Intent intent = new Intent(ListaProfissionalActivity.this, InfoProfissionalActivity.class);
+            intent.putExtra("IdProf" , profissional.getIdProfissional());
+            startActivity(intent);
         }
     });
     }

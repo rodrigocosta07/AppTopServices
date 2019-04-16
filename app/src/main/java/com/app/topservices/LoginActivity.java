@@ -1,5 +1,6 @@
 package com.app.topservices;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -9,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -69,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
         Entrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                hideSoft();
                 if(Login.getText().toString().isEmpty() && Senha.getText().toString().isEmpty() ){
                     Toast.makeText(LoginActivity.this, "Digite o seu email e senha" , Toast.LENGTH_LONG).show();
                     Login.requestFocus();
@@ -80,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Digite sua senha" , Toast.LENGTH_LONG).show();
                     Senha.requestFocus();
                 }else{
+
                     userLogin = Login.getText().toString();
                     userSenha = Senha.getText().toString();
                     //validarLogin();
@@ -206,4 +209,13 @@ public class LoginActivity extends AppCompatActivity {
             mProgressBar.setProgress(values[0]);
         }
     }
+
+
+private void hideSoft(){
+    InputMethodManager inputManager = (InputMethodManager)
+            getSystemService(Context.INPUT_METHOD_SERVICE);
+inputManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
+}
+
 }
