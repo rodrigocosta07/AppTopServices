@@ -1,5 +1,9 @@
 package Model;
 
+import android.widget.Toast;
+
+import com.app.topservices.RegistrarActivity;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
 
@@ -32,7 +36,16 @@ public class Condominio {
 
     public void salvar(){
         DatabaseReference referenciaFirebase = ConfiguracaoFirebase.getFirebase();
-        referenciaFirebase.child("Condominio").child(getIdCondo()).setValue(this);
+        referenciaFirebase.child("Condominio").child(getIdCondo()).setValue(this , new DatabaseReference.CompletionListener(){
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                if (databaseError != null) {
+                    System.out.println("Data could not be saved " + databaseError.getMessage());
+                } else {
+                    System.out.println("Data saved successfully.");
+                }
+            }
+        });
     }
 
     @Exclude
