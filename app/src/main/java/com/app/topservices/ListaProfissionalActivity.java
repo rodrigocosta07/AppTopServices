@@ -163,9 +163,7 @@ public class ListaProfissionalActivity extends AppCompatActivity implements Navi
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -176,7 +174,7 @@ public class ListaProfissionalActivity extends AppCompatActivity implements Navi
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_perfil) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
@@ -188,10 +186,9 @@ public class ListaProfissionalActivity extends AppCompatActivity implements Navi
             autenticacao.signOut();
 
             startActivity(intent);
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        }else if(id == R.id.nav_servicos){
+            Intent intent = new Intent(ListaProfissionalActivity.this, ServicosCondominioActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.TelaListaProfissional);

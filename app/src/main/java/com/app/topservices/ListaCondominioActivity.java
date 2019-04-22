@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Config.ConfiguracaoFirebase;
 import Model.Condominio;
@@ -174,9 +175,7 @@ public class ListaCondominioActivity extends AppCompatActivity implements Naviga
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -187,7 +186,7 @@ public class ListaCondominioActivity extends AppCompatActivity implements Naviga
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_perfil) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
@@ -199,12 +198,10 @@ public class ListaCondominioActivity extends AppCompatActivity implements Naviga
             autenticacao.signOut();
 
            startActivity(intent);
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        }else if(id == R.id.nav_servicos){
+            Intent intent = new Intent(ListaCondominioActivity.this, ServicosCondominioActivity.class);
+            startActivity(intent);
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.TelaListaCondominio);
         drawer.closeDrawer(GravityCompat.START);
         return true;

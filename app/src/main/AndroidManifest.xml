@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
-        <activity android:name=".InfoProfissionalActivity"></activity>
+        <activity android:name=".ServicosCondominioActivity"></activity>
+        <activity android:name=".InfoProfissionalActivity" />
         <activity android:name=".InfoCondominioActivity" />
         <activity
             android:name=".TesteActivity"
